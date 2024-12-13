@@ -12,4 +12,18 @@ public class ExampleClientMixin {
 	private void init(CallbackInfo info) {
 		// This code is injected into the start of MinecraftClient.run()V
 	}
+
+	@Inject(at = @At("HEAD"), method = "tick()V")
+    private void onTick(CallbackInfo info) {
+        // Access the MinecraftClient instance
+        MinecraftClient client = (MinecraftClient) (Object) this;
+
+        // Check if inGameHud is available
+        if (client.inGameHud != null) {
+            // Log the title if it's set
+            String title = client.inGameHud.toString();
+            System.out.println("Current HUD Title: " + title);
+        }
+
+    }
 }
